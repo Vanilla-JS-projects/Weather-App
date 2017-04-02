@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <title>my weather app</title>
+</head>
+<body>
+  <section class="main">
+  <div class="container">
+    <h1>weather app 2017</h1>
+    <div class="inner">
+      <form id="weather">
+        <input type="text" id="latitude" placeholder="latitude">
+        <input type="text" id="longitude" placeholder="longitude">
+        <button id="submit">get weather</button>
+      </form>
+      <div id="display" class="displayWeather">
+       <!-- your weather data and images goes in here -->
+       <p id="temp"></p>
+       <p id="condition"></p>
+       <p id="images"></p>
+    </div>
+    </div>
+  </div>
+  </section>
+  <script src="app.js"></script>
+</body>
+</html>
