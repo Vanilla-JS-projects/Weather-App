@@ -1,6 +1,14 @@
-const api =  'https://api.darksky.net/forecast/'
+
+///////////////globaldeclaration
+const api =  `http://api.openweathermap.org/data/2.5/weather?q=`
 let getweather = document.getElementById("submit")
-let condition = []
+let tempshow = document.getElementById("temp")
+let description = document.getElementById("condition")
+let cords = document.getElementById("cords")
+let condition = ""
+let condition2
+let latitude = ""
+let longitude = ""
 let temp = 0
 let cloud = 'icons/cloud.png'
 let cloud1 = 'icons/cloud1.png'
@@ -15,64 +23,139 @@ let storm2 = 'icons/storm2.png'
 let sun1 = 'icons/sun1.png'
 let sun2 = 'icons/sun2.png'
 
+/////////////////click event
 getweather.addEventListener('click', (e) => {
     e.preventDefault()
-    let key = "966d82030b7d19a04bc492ce1c8c28ea"
-    let lat = document.getElementById("latitude").value
-    let long = document.getElementById("longitude").value
-    let link = api+key+"/"+lat+','+long
-  
-     fetch(`${link}`)
-    .then((res) => res.json())
-    
-    .then(function(data){
-     temp = Math.round((data.currently.temperature - 32) * 5 / 9)
-     condition.push(JSON.stringify(data.currently.summary))
-     
-      if(condition.includes("cloudy","clouds","partly cloudy","mostly cloudy","over-cast"))
-      {    
-        document.getElementById("images").innerHTML = '<img src="' + cloud + '">' + '<img src="' + cloud1 + '">' + '<img src="' + cloud2 + '">'
-      }
-      if(condition.includes("sunny","sun","sunshine","partly sunny"))
-      {    
-        document.getElementById("images").innerHTML = '<img src="' + sun1 + '">' + '<img src="' + sun2 + '">'
-      }
-     if(condition.includes("rain","rainy","light drizzle","drizzle","showers","rain showers"))
-      {    
-        document.getElementById("images").innerHTML = '<img src="' + rain1 + '">' + '<img src="' + rain2 + '">' + '<img src="' + rain3 + '">'
-      }
-     if(condition.includes("snow","snowy","snowfall"))
-      {    
-        document.getElementById("images").innerHTML = '<img src="' + snow1 + '">' + '<img src="' + snow2 + '">'
-      }
-     if(condition.includes("storm","snowstorm","stormy"))
-      {    
-        document.getElementById("images").innerHTML = '<img src="' + storm1 + '">' + '<img src="' + storm2 + '">' 
-      }
-     
-     document.getElementById("temp").innerHTML = "Temperature: " +  temp+" C" 
-     document.getElementById("condition").innerHTML = "Description: " + condition
-     
-    })
-    
-    .catch((e)=>console.log(`something is wrong`))
-    
+    let key = "d683467caf9e0a55c1d341a72dcaad39"
+    let city  = document.getElementById("city").value
+    let country = document.getElementById("country").value
+    let link = api+city+','+country+"&appid="+key
+    fetchweather(link)    
 })
 
 
-// long :51.5074
-// lat  :0.1278
+//////////////////fetching from api
+function fetchweather(link){
+     fetch(`${link}`)
+    .then((res) => res.json())
+    .then(function(data){
+     temp = Math.round(data.main.temp-273.15)
+     condition = (JSON.stringify(data.weather[0].description))
+     condition2 = condition.toLocaleLowerCase().split(" ")
+     longitude = data.coord.lon
+     latitude = data.coord.lat
+     print()     
+    })
+    .catch((e)=>console.log(`something is wrong`))
+}
 
 
-// ERROR IN CONSOLE :::::::::::::
-//  Fetch API cannot load https://api.darksky.net/forecast/966d82030b7d19a04bc492ce1c8c28ea/51.5074,0.1278.
-// No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://preview.c9users.io'
-// is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to 
-// fetch the resource with CORS disabled.
+/////////////////////converting into fahrenheit 
+function convert(){
+   let faren = document.getElementById("faren") 
+   faren.innerHTML = "Fahrenheit: " + temp * 9 / 5 + 32
+   faren.style.fontWeight= 'bold'
+}
 
-// SO I HAVE USED A CHROME EXTENSION : https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en
-// PROGRAM ONLY WORKS AFTER ENABLING IT.
+//////////////////////////printing weather details on screen
+function print(){
+       
+         if(condition.includes("broken clouds")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + cloud + '">' + '<img src="' + cloud1 + '">' + '<img src="' + cloud2 + '">'
+          }
 
+          if(condition.includes("cloudy")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + cloud + '">' + '<img src="' + cloud1 + '">' + '<img src="' + cloud2 + '">'
+          }
+           if(condition.includes("clouds")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + cloud + '">' + '<img src="' + cloud1 + '">' + '<img src="' + cloud2 + '">'
+          }
+           if(condition.includes("over-cast")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + cloud + '">' + '<img src="' + cloud1 + '">' + '<img src="' + cloud2 + '">'
+          }
+          if(condition.includes("sunny")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + sun1 + '">' + '<img src="' + sun2 + '">'
+          }
+          if(condition.includes("haze")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + sun1 + '">' + '<img src="' + sun2 + '">'
+          }
+           if(condition.includes("sun")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + sun1 + '">' + '<img src="' + sun2 + '">'
+          }
+           if(condition.includes("sunshine")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + sun1 + '">' + '<img src="' + sun2 + '">'
+          }
+            if(condition.includes("clear")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + sun1 + '">' + '<img src="' + sun2 + '">'
+          }
+         if(condition.includes("rain")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + rain1 + '">' + '<img src="' + rain2 + '">' + '<img src="' + rain3 + '">'
+          }
+          if(condition.includes("shower")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + rain1 + '">' + '<img src="' + rain2 + '">' + '<img src="' + rain3 + '">'
+          }
+         
+         if(condition.includes("rainy")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + rain1 + '">' + '<img src="' + rain2 + '">' + '<img src="' + rain3 + '">'
+          }
+         
+         if(condition.includes("mist")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + rain1 + '">' + '<img src="' + rain2 + '">' + '<img src="' + rain3 + '">'
+          }
+         
+         if(condition.includes("drizzle")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + rain1 + '">' + '<img src="' + rain2 + '">' + '<img src="' + rain3 + '">'
+          }
+         
+         if(condition.includes("snow")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + snow1 + '">' + '<img src="' + snow2 + '">'
+          }
+         if(condition.includes("snowy")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + snow1 + '">' + '<img src="' + snow2 + '">'
+          }
+         if(condition.includes("snowfall")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + snow1 + '">' + '<img src="' + snow2 + '">'
+          }
 
+         if(condition.includes("storm")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + storm1 + '">' + '<img src="' + storm2 + '">' 
+          }
+         if(condition.includes("snowstorm")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + storm1 + '">' + '<img src="' + storm2 + '">' 
+          }
+         if(condition.includes("stormy")==true)
+          {    
+            document.getElementById("images").innerHTML = '<img src="' + storm1 + '">' + '<img src="' + storm2 + '">' 
+          }
 
+         tempshow.innerHTML = "Temperature: " +  temp+"°" +"C" 
+         description.innerHTML = "Description: " + condition
+         cords.innerHTML =  "Latitude: " + latitude + "   " + " Longitude: " + longitude  
+         
+         //////////////// Little Bit of CSS Styling ////////
+         document.getElementById("convert").style.display = 'block'
+         tempshow.style.fontWeight = 'bold' 
+         description.style.fontWeight = 'bold'
+         cords.style.fontWeight = 'bold'
+
+}
 

@@ -10,17 +10,18 @@
 <body>
   <section class="main">
   <div class="container">
-    <h1>weather app 2017</h1>
+    <h1>Weather App<span class="author">               By Akshil Shah<span></h1>
     <div class="inner">
       <form id="weather">
-        <input type="text" id="latitude" placeholder="latitude">
-        <input type="text" id="longitude" placeholder="longitude">
-        <button id="submit">get weather</button>
+        <input type="text" id="city" placeholder="City">
+        <input type="text" id="country" placeholder="Country">
+        <button id="submit">Get Weather</button>
       </form>
       <div id="display" class="displayWeather">
-       <!-- your weather data and images goes in here -->
        <p id="temp"></p>
+       <button id="convert" class="id" onclick="convert()">Convert to F</button><p id="faren"></p>
        <p id="condition"></p>
+       <p id="cords"></p>
        <p id="images"></p>
     </div>
     </div>
