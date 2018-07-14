@@ -26,7 +26,7 @@ let sun2 = 'icons/sun2.png'
 /////////////////click event
 getweather.addEventListener('click', (e) => {
     e.preventDefault()
-    let key = "d683467caf9e0a55c1d341a72dcaad39"
+    let key = "{key}"
     let city  = document.getElementById("city").value
     let country = document.getElementById("country").value
     let link = api+city+','+country+"&appid="+key
